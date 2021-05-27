@@ -264,6 +264,19 @@ function showUserInfo(){
    });
 }
 
+/*
+Short cuts have webContentLink property which points to the file
+selfLink for first file in wayanad:
+https://www.googleapis.com/drive/v2/files/1aILtpNvMGCtchXrEf9tma4RxX3k8iw4i
+selfLink for first file in best:
+https://www.googleapis.com/drive/v2/files/1-Zzi-hRXGUH3AI1OJ8Dl-q62hF6Bo6wI
+webContentLink:
+https://drive.google.com/uc?id=1-Zzi-hRXGUH3AI1OJ8Dl-q62hF6Bo6wI&export=download
+alternateLink: and embedLink:
+https://drive.google.com/file/d/1-Zzi-hRXGUH3AI1OJ8Dl-q62hF6Bo6wI/view?usp=drivesdk
+
+Other files have SelfLink which should point to the file.
+*/
 function buildFiles(){
 	var fText = "";
     if (DRIVE_FILES.length > 0) {
@@ -272,7 +285,7 @@ function buildFiles(){
 			DRIVE_FILES[i].level = (parseInt(FOLDER_LEVEL) + 1).toString();
 			DRIVE_FILES[i].parentID = (DRIVE_FILES[i].parents.length > 0) ? DRIVE_FILES[i].parents[0].id : "";
 			DRIVE_FILES[i].thumbnailLink = DRIVE_FILES[i].thumbnailLink || '';
-			DRIVE_FILES[i].fileType =  (DRIVE_FILES[i].fileExtension == null) ? "folder" : "file";
+			DRIVE_FILES[i].fileType =  (DRIVE_FILES[i].mimeType === "application/vnd.google-apps.folder") ? "folder" : "file";
 			DRIVE_FILES[i].permissionRole = DRIVE_FILES[i].userPermission.role;
 			DRIVE_FILES[i].hasPermission = (DRIVE_FILES[i].permissionRole == "owner" || DRIVE_FILES[i].permissionRole == "writer");
 			var textContentURL = '';
