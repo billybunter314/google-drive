@@ -307,10 +307,33 @@ function buildFiles(){
 			}
 			fText += "<div class='item-title'>" + DRIVE_FILES[i].title + "</div>";
 
-			//button actions
+	    //button actions
+	    console.log("id: " + DRIVE_FILES[i].id);
+	    var id = DRIVE_FILES[i].id;
+	    var urlparts = id.split("?");
+	    var idurl;
+	    if (urlparts.length == 2) {
+		var query = urlparts[1];
+		var params = query.split("&");
+		var idstr;
+		for (var i = 0; i < params.length; i++) {
+		    if (params[i].indexOf("id") != -1) {
+			idstr = params[i];
+			break;
+		    }
+		}
+		if (idstr) {
+		    var idstrparts = idstr.split("=");
+		    if (idstrparts.length == 2) {
+			idurl = idstrparts[1];
+		    }
+		}
+	    }
+	    console.log("id: " + id + " idurl: " + idurl);
+	    idurl = idurl? "https://drive.google.com/file/d/" + idurl:id;
 			fText += "<div class='button-box'>";
 				if (DRIVE_FILES[i].fileType != "folder") {
-					fText += "<div class='button-download' title='Download' data-id='" + DRIVE_FILES[i].id + "' data-file-counter='" + i + "'></div>";
+					fText += "<div class='button-download' title='Download' data-id='" + idurl + "' data-file-counter='" + i + "'></div>";
 				}
 				
 				if (DRIVE_FILES[i].textContentURL != null && DRIVE_FILES[i].textContentURL.length > 0) {
