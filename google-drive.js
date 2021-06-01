@@ -21,7 +21,11 @@ var FOLDER_ARRAY = [];
 
 /******************** AUTHENTICATION ********************/
 
- function handleClientLoad() {
+function handleClientLoad() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('folderid')) {
+	FOLDER_ID = urlParams.get('folderid');
+    }
 	// Load the API client and auth2 library
 	gapi.load('client:auth2', initClient);
 }
